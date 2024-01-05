@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Bitcoin Wallet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #wallet-info {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        span {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div id="wallet-info">
+        <h1>Your Bitcoin Wallet</h1>
+        <p>Height: <span id="height"></span></p>
+        <p>Timestamp: <span id="timestamp"></span></p>
+        <p>Difficulty: <span id="difficulty"></span></p>
+        <p>Merkle Root: <span id="merkleRoot"></span></p>
+        <p>Transactions: <span id="transactions"></span></p>
+        <p>Version: <span id="version"></span></p>
+        <p>Chainwork: <span id="chainwork"></span></p>
+        <p>Total Fee: <span id="totalFee"></span></p>
+        <p>Nonce: <span id="nonce"></span></p>
+        <p>Miner: <span id="miner"></span></p>
+        <p>Average Fee: <span id="averageFee"></span></p>
+        <p>Bits: <span id="bits"></span></p>
+        <p>Size: <span id="size"></span> MB</p>
+        <p>Confirmations: <span id="confirmations"></span></p>
+    </div>
+
+    <script>
+        // Replace 'your_block_height' with the actual block height you want to explore
+        const blockHeight = 825811;
+
+        // Fetch data from the whatsonchain API
+        const apiEndpoint = `https://api.whatsonchain.com/v1/bsv/main/block/height/${blockHeight}`;
+        fetch(apiEndpoint)
+            .then(response => response.json())
+            .then(data => {
+                // Update the HTML content with the extracted information
+                document.getElementById("height").innerText = data.height;
+                document.getElementById("timestamp").innerText = data.timestamp;
+                document.getElementById("difficulty").innerText = data.difficulty;
+                document.getElementById("merkleRoot").innerText = data.merkleroot;
+                document.getElementById("transactions").innerText = data.txcount;
+                document.getElementById("version").innerText = data.version;
+                document.getElementById("chainwork").innerText = data.chainwork;
+                document.getElementById("totalFee").innerText = data.totalFees;
+                document.getElementById("nonce").innerText = data.nonce;
+                document.getElementById("miner").innerText = data.miner;
+                document.getElementById("averageFee").innerText = data.fee;
+                document.getElementById("bits").innerText = data.bits;
+                document.getElementById("size").innerText = (data.size / (1024 * 1024)).toFixed(2);
+                document.getElementById("confirmations").innerText = data.confirmations;
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+</html>
